@@ -25,7 +25,7 @@ This starts the server which will forward messages from the XDK to the Tangle as
 ## Runnig the Examples:  
   
 Start the Streams Gateway with two example keys:  
-`cargo run --release EXAMPLE_KEY SUBKEY`  
+`cargo run --release EXAMPLE_KEY SUB_KEY`  
 
 In a separate window start a public-only subscriber:  
 `cargo run --release --example subscriber_public_only`  
