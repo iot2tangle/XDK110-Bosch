@@ -11,8 +11,8 @@ Make sure you also have the build dependencies installed, if not run:
 
 ## Installing XDK2Streams
 Download XDK2Streams:  
-`git clone https://github.com/AleBuser/xdk2mam`  
-`cd xdk2mam/http-streams`  
+`git clone https://github.com/iot2tangle/xdk2streams`  
+`cd http-sdcard/xdk2streams-streams`  
   
 Configure the Streams Gateway:  
 `nano config.json`  
