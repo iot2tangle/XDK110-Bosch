@@ -1,4 +1,4 @@
-# XDK2MAM
+# XDK2Streams
 
 The followong repository provides with code in Clang to flash the Bosch XDK110 and in Rust to get the XDK110 datasets and publish them to the IOTA Tangle through Streams. 
 This code has been tested on Raspberry PI 3 and 4 and in Debian based Virtual Private Servers.  
