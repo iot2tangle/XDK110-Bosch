@@ -58,7 +58,11 @@ This code has been tested on Raspberry PI 3 and 4 and in Debian based Virtual Pr
 
 ## Preparation
 
-Install rust if you don't have it already, find the instructions here https://www.rust-lang.org/tools/install
+Clone this repo and navigate to the http-sdcard/xdk2streams-streams where the Rust code is
+
+`git clone https://github.com/iot2tangle/xdk2streams.git`
+
+Install Rust if you don't have it already, find the instructions here https://www.rust-lang.org/tools/install
 
 `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 
