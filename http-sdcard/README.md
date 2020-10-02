@@ -7,9 +7,9 @@ The following repository has either files for the Bosch XDK 110 and for the data
 **This package is a variation of the HTTP one that allows to use WLAN SSID, Password, Host and other needed values from a config file on a micro sd card, which makes possible to use the XDK in diferent networks without need to recompile (you just change values in the config file and you are ready to go)**
 
 - xdk2streams-c (C Code to build and flash to your XDK)
-- xdk2mam-streams (Rust code to start a listener server)
+- xdk2mam-rust (Rust code to start a listener server)
 
-# Instructions
+# Instructions for the XDK110
 
 ## Requirements
 In order to be able to run the code on this repo you will to [download XDK Workbench](https://xdk.bosch-connectivity.com/software-downloads), have a XDK 110 and insall Node on the computer you are going to use as listener server.
@@ -33,7 +33,7 @@ WLAN_PSK=enter-your-wifi-password
 DEST_SERVER_HOST=192.168.0.4
 DEST_SERVER_PORT=8080
 INTER_REQUEST_INTERVAL=3000
-DEST_POST_PATH=/sensors
+DEST_POST_PATH=/sensor_data
 ENVIROMENTAL=YES
 ACCELEROMETER=YES
 GYROSCOPE=YES
@@ -48,13 +48,8 @@ Turn on the XDK and you are good to go!
 If everything went fine the XDK110 should now be sending its sensors data to the given destination server. 
 
 
-## Setting up Rust Server for Streams
+# Instructions for the Streams Gateway
 
-### Streams: Setting up your Rust publisher
-
-
-The followong repository provides with code in Clang to flash the Bosch XDK110 and in Rust to get the XDK110 datasets and publish them to the IOTA Tangle through Streams. 
-This code has been tested on Raspberry PI 3 and 4 and in Debian based Virtual Private Servers.  
 
 ## Preparation
 
@@ -74,21 +69,35 @@ Make sure you also have the build dependencies installed, if not run:
 `sudo apt update`  
 
 ## Installing XDK2Streams
-Download XDK2Streams:  
-`git clone https://github.com/iot2tangle/xdk2streams`  
-`cd http-sdcard/xdk2streams-streams`  
-  
-Configure the Streams Gateway:  
-`nano config.json`  
 
-Set the *device_name* to the value specified in the configuration file of the XDK110.  
-Change *port, node, mwm, local_pow* if needed 
+Download XDK2Streams and navigate to the xdk2streams-rust folder:  
+
+`git clone https://github.com/iot2tangle/xdk2streams`  
+`cd http-sdcard/xdk2streams-rust`  
+  
+Configure the Streams Gateway on the ***config.json*** file   
+
+```
+{
+    "device_name": "XDK_HTTP", 
+    "port": 8080, 
+    "node": "https://nodes.iota.cafe:443", 
+    "mwm": 14,    
+    "local_pow": false     
+}
+```
+
+**Set the *device_name* to the value specified in the XDK110 configuration file as DEVICE_NAME**  
+Change *port, node, mwm, local_pow* if needed. 
 
 ## Runnig the Examples:  
 
-### Sending data to the Tangle
+### Sending messages to the Tangle
+
 Run the Streams Gateway:  
+
 `cargo run --release`  
+
 This starts the server which will forward messages from the XDK to the Tangle  
   
 The Output will be something like this:  
@@ -104,6 +113,9 @@ The Output will be something like this:
 
 In a separate window start a subscriber using the Channle Root printed by the Gateway (see example above):  
 `cargo run --release --example subscriber <your_channel_root> `  
+
+
+### Testing 
 
 To send data to the server you can use Postman, or like in this case cURL, make sure the port is the same as in the config.json file:  
 `  
