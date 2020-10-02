@@ -12,25 +12,18 @@ path = "src/lib.rs"
 
 [dependencies]
 failure = "0.1.7"
-channels_lite = {path = "src/iota_channels_lite", version = "^0"}
-iota-streams = { git = "https://github.com/iotaledger/streams.git" }
-iota-conversion = "0.5.1"
-handlebars = "3.1.0"
+anyhow = { version = "1.0", default-features = false }
+iota-streams = { git = "https://github.com/iotaledger/streams"}
+iota-core = { git = "https://github.com/iotaledger/iota.rs", rev = "03cf531" }
+iota-conversion = { git = "https://github.com/iotaledger/iota.rs", rev = "03cf531" }
 serde = {version="1.0.110", features = ["derive"] }
 serde_derive = "1.0.110"
 serde_json = "1.0.53"
-derive_more = "0.99.2"
-reqwest = {version="0.10.4", features = ["json"] }
 tokio-core = "0.1.17"
 tokio = {version = "0.2.18", features = ["macros"]}
-futures = "0.3.1"
-chrono = { version = "0.4.10", features = ["serde"] }
-actix-service = "1.0.1"
-actix-rt = "1.0.0"
-actix-web = "2.0.0"
-actix-cors = "0.2.0"
-base64 = "^0.12"
+hyper = "0.13"
 rust-crypto = "0.2.36"
 rand = "0.7.3"
+base64 = "^0.12"
 
 

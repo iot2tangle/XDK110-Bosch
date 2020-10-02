@@ -16,26 +16,32 @@ Download XDK2Streams:
   
 Configure the Streams Gateway:  
 `nano config.json`  
-
-Run the Streams Gateway:  
-`cargo run --release [device_key] [subscriber_key]`  
-This starts the server which will forward messages from the XDK to the Tangle as well as manage the subscribers
+ 
+Set the *device_name* to the value specified in the configuration file of the XDK110.  
+Change *port, node, mwm, local_pow* if needed 
 
   
 ## Runnig the Examples:  
   
-Start the Streams Gateway with two example keys:  
-`cargo run --release EXAMPLE_KEY SUB_KEY`  
+Run the Streams Gateway:  
+`cargo run --release`  
+This starts the server which will forward messages from the XDK to the Tangle  
+  
+The Output will be something like this:  
+`>> Starting.... `  
+`>> Channel root: "ab3de895ec41c88bd917e8a47d54f76d52794d61ff4c4eb3569c31f619ee623d0000000000000000"`  
+`>> To Start the Subscriber run: `  
+  
+`>> cargo run --release --example subscriber "ab3de895ec41c88bd917e8a47d54f76d52794d61ff4c4eb3569c31f619ee623d0000000000000000" `  
+  
+`>> Listening on http://0.0.0.0:8080`  
 
-In a separate window start a public-only subscriber:  
-`cargo run --release --example subscriber_public_only`  
-
-Or a subscriber that can read both public and masked data:  
-`cargo run --release --example subscriber`  
+In a separate window start a subscriber using the Channle Root printed by the Gateway (see example above):  
+`cargo run --release --example subscriber <your_channel_root> `  
 
 To send data to the server you can use Postman, or like in this case cURL, make sure the port is the same as in the config.json file:  
 `  
-curl --location --request POST '127.0.0.1:8080/sensor_data_public'   
+curl --location --request POST '127.0.0.1:8080/sensor_data'   
 --header 'Content-Type: application/json'   
 --data-raw '{
     "xdk2mam": [
@@ -62,42 +68,10 @@ curl --location --request POST '127.0.0.1:8080/sensor_data_public'
             ]
         }
     ],  
-    "device": "EXAMPLE_KEY",  
+    "device": "XDK_HTTP",  
     "timestamp": "1558511111"  
 }'  
-`  
-
-Same thing for masked data but with the _sensor_data_masked_ endpoint (Note, this only works if a subscriber has subscribed to the encrypted channel already):  
-`curl --location --request POST '127.0.0.1:8080/sensor_data_masked'
---header 'Content-Type: application/json' 
---data-raw '{
-    "xdk2mam": [
-        {
-            "sensor": "Magnetometer",
-            "data": [
-                {
-                    "x": "36"
-                },
-                {
-                    "y": "51"
-                },
-                {
-                    "z": "28"
-                }
-            ]
-        },
-        {
-            "sensor": "Acoustic",
-            "data": [
-                {
-                    "mp": "1"
-                }
-            ]
-        }
-    ],
-    "device": "EXAMPLE_KEY",
-    "timestamp": "1558511111"
-}'  
-`  
-
+`   
+IMPORTANT: The device will be authenticated through the "device" field in the request (in this case XDK_HTTP), this has to match what was set as device_name in the config.json on the Gateway (see Configuration section above)!  
+  
 After a few seconds you should now see the data beeing recieved by the Subscriber!

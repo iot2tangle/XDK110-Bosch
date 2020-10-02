@@ -1,28 +1,40 @@
-use channels_lite::channels_lite::channel_author::Channel;
+use local::api::stream_server;
+use local::iota_channels_lite::channel_author::Channel;
 use local::security::keystore::KeyManager;
-use local::stream_server;
 use local::types::config::Config;
 
-use std::{env, fs::File};
+use std::fs::File;
+use std::sync::{Arc, Mutex};
 
-#[actix_rt::main]
-async fn main() -> std::io::Result<()> {
-    let args: Vec<String> = env::args().collect();
+use iota_streams::app::transport::tangle::client::SendTrytesOptions;
 
-    let author_key = &args[1];
-    let subscriber_key = &args[2];
-
-    KeyManager::new(author_key.to_string(), subscriber_key.to_string());
-
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let config: Config = serde_json::from_reader(File::open("config.json").unwrap()).unwrap();
-    let endpoint = config.endpoint;
+    let device_name = config.device_name;
+    let port = config.port;
     let node = config.node;
     let mwm = config.mwm;
     let local_pow = config.local_pow;
 
+    let store = KeyManager::new(device_name.to_string());
+
     println!("Starting....");
 
-    let c = Channel::new(node, mwm, local_pow, None);
+    let mut send_opt = SendTrytesOptions::default();
+    send_opt.min_weight_magnitude = mwm;
+    send_opt.local_pow = local_pow;
 
-    stream_server::start(endpoint, c).await
+    let channel = Arc::new(Mutex::new(Channel::new(node, send_opt, None)));
+    let (addr, _) = channel.lock().expect("").open().unwrap();
+    println!("Channel root: {:?}", addr);
+    println!(
+        "To Start the Subscriber run: \n
+    cargo run --release --example subscriber {:?} \n",
+        addr
+    );
+
+    let store = Arc::new(Mutex::new(store));
+
+    stream_server::start(port, channel, store).await
 }

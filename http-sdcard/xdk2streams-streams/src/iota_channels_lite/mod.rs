@@ -3,6 +3,8 @@
 //!
 pub mod channel_author;
 pub mod channel_subscriber;
+pub mod utils;
+
 use iota_streams::app::transport::tangle::client::SendTrytesOptions;
 
 ///

@@ -6,7 +6,6 @@ use std::fs::File;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Keystore {
-    pub api_key_subscriber: String,
     pub api_key_author: String,
 }
 
@@ -16,10 +15,9 @@ pub struct KeyManager {
 }
 
 impl KeyManager {
-    pub fn new(new_key_aut: String, new_key_subscriber: String) -> KeyManager {
+    pub fn new(new_key_aut: String) -> KeyManager {
         let keystore = Keystore {
             api_key_author: calculate_hash(new_key_aut),
-            api_key_subscriber: calculate_hash(new_key_subscriber),
         };
 
         store_keystore(&keystore);
@@ -31,11 +29,6 @@ impl KeyManager {
         let rec: Keystore =
             serde_json::from_reader(File::open("src/security/keystore.json").unwrap()).unwrap();
         KeyManager { keystore: rec }
-    }
-
-    pub fn add_subscriber(&mut self, new_key_subscriber: String) -> () {
-        self.keystore.api_key_subscriber = calculate_hash(new_key_subscriber);
-        store_keystore(&self.keystore)
     }
 }
 
