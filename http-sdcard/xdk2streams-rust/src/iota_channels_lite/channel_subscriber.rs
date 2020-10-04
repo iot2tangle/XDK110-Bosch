@@ -4,10 +4,7 @@
 use super::Network;
 use crate::iota_channels_lite::utils::{payload::json::Payload, random_seed};
 use iota::client as iota_client;
-use iota_streams::app::transport::tangle::{
-    client::{RecvOptions, SendTrytesOptions},
-    PAYLOAD_BYTES,
-};
+use iota_streams::app::transport::tangle::{client::RecvOptions, PAYLOAD_BYTES};
 use iota_streams::app::transport::Transport;
 use iota_streams::app_channels::{
     api::{
@@ -25,7 +22,6 @@ use anyhow::Result;
 pub struct Channel {
     subscriber: Subscriber,
     is_connected: bool,
-    send_opt: SendTrytesOptions,
     announcement_link: Address,
     subscription_link: Address,
     channel_address: String,
@@ -51,7 +47,6 @@ impl Channel {
         Self {
             subscriber: subscriber,
             is_connected: false,
-            send_opt: node.send_options(),
             announcement_link: Address::from_str(&channel_address, &announcement_tag).unwrap(),
             subscription_link: Address::default(),
             channel_address: channel_address,
@@ -76,13 +71,6 @@ impl Channel {
             }
         }
         if found_valid_msg {
-            let subscribe_link = {
-                let msg = self.subscriber.subscribe(&self.announcement_link)?;
-                iota_client::Client::get().send_message_with_options(&msg, self.send_opt)?;
-                msg.link.clone()
-            };
-
-            self.subscription_link = subscribe_link;
             self.is_connected = true;
         } else {
             println!("No valid announce message found");
