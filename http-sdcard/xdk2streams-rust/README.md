@@ -71,7 +71,10 @@ curl --location --request POST '127.0.0.1:8080/sensor_data'
     "device": "XDK_HTTP",  
     "timestamp": "1558511111"  
 }'  
-`   
+`
+Note: The timestamp is optional, if no timestamp is sent, a new timestamp will be added by the realy server before the data is published to the Tangle.
+
+         
 IMPORTANT: The device will be authenticated through the "device" field in the request (in this case XDK_HTTP), this has to match what was set as device_name in the config.json on the Gateway (see Configuration section above)!  
   
 After a few seconds you should now see the data beeing recieved by the Subscriber!
