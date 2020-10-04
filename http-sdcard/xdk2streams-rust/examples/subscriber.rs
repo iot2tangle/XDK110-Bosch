@@ -66,8 +66,9 @@ async fn main() {
     // read old messages in channel
     let public_list = sub.read_all_public().await.unwrap();
     for data in &public_list {
-        let data: SensorData = serde_json::de::from_str(data).unwrap();
-        println!("{:?} \n  \n", data);
+        let _data_parsed: SensorData = serde_json::de::from_str(data).unwrap();
+        //print out a pretty pretty JSON
+        println!("{} \n  \n", &data.replace("\\", ""));
     }
 
     // listen for new messages sent to channel
@@ -76,10 +77,11 @@ async fn main() {
         let public_list = sub.read_all_public().await.unwrap();
 
         match public_list.last() {
-            Some(last) => {
+            Some(last_data) => {
                 if &public_list.len() != &public_list_len.clone() {
-                    let data: SensorData = serde_json::de::from_str(&last).unwrap();
-                    println!("{:?} \n  \n", data);
+                    let _data_parsed: SensorData = serde_json::de::from_str(&last_data).unwrap();
+                    //print out a pretty pretty JSON
+                    println!("{} \n  \n", &last_data.replace("\\", ""));
                     public_list_len = public_list.len().clone();
                 }
             }
