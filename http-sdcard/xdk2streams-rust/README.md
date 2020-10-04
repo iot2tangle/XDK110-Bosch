@@ -1,4 +1,4 @@
-# XDK2MAM
+# xdk2streams
 
 ## Preparation
 Install rust if you don't have it already, find the instructions here https://www.rust-lang.org/tools/install
@@ -44,7 +44,7 @@ To send data to the server you can use Postman, or like in this case cURL, make 
 curl --location --request POST '127.0.0.1:8080/sensor_data'   
 --header 'Content-Type: application/json'   
 --data-raw '{
-    "xdk2mam": [
+    "xdk2streams": [
         {
             "sensor": "Gyroscope",
             "data": [

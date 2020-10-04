@@ -1,8 +1,8 @@
 use crate::authenticate;
 use crate::security::keystore::{calculate_hash, KeyManager};
+use crate::timestamp_in_sec;
 use crate::types::sensor_data::SensorData;
 use std::sync::{Arc, Mutex};
-use std::time::{SystemTime, UNIX_EPOCH};
 
 use crate::iota_channels_lite::channel_author::Channel;
 use crate::iota_channels_lite::utils::payload::json::PayloadBuilder;
@@ -35,25 +35,24 @@ pub async fn sensor_data_response(
 
     let json_data: serde_json::Result<SensorData> = serde_json::from_slice(&data);
     match json_data {
-        Ok(mut data_ser) => {
+        Ok(mut sensor_data) => {
             let hash = keystore
                 .lock()
                 .expect("lock keystore")
                 .keystore
                 .api_key_author
                 .clone();
-            if authenticate(&data_ser.device, hash.clone()) {
-                data_ser.device.to_string().push_str("_id");
-                data_ser.device = calculate_hash(data_ser.device);
+            if authenticate(&sensor_data.device, hash.clone()) {
+                sensor_data.device.to_string().push_str("_id");
+                sensor_data.device = calculate_hash(sensor_data.device);
+                sensor_data.timestamp = Some(timestamp_in_sec().to_string());
                 println!(
                     "POST /sensor_data -- {:?} -- authorized request by device",
-                    SystemTime::now()
-                        .duration_since(UNIX_EPOCH)
-                        .unwrap()
-                        .as_secs()
+                    timestamp_in_sec()
                 );
                 let mut channel = channel.lock().unwrap();
-                match channel.write_signed(PayloadBuilder::new().public(&data_ser).unwrap().build())
+                match channel
+                    .write_signed(PayloadBuilder::new().public(&sensor_data).unwrap().build())
                 {
                     Ok(_) => {
                         response = Response::builder()
@@ -78,10 +77,7 @@ pub async fn sensor_data_response(
                     .body(Body::from("Unauthorized"))?;
                 println!(
                     "POST /sensor_data -- {:?} -- unauthorized request blocked",
-                    SystemTime::now()
-                        .duration_since(UNIX_EPOCH)
-                        .unwrap()
-                        .as_secs()
+                    timestamp_in_sec()
                 );
             }
         }

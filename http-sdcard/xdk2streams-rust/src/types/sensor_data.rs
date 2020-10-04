@@ -4,7 +4,7 @@ use serde_derive::Serialize;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct SensorData {
-    pub xdk2mam: Vec<SensorType>,
+    pub xdk2streams: Vec<SensorType>,
     pub device: String,
-    pub timestamp: String,
+    pub timestamp: Option<String>,
 }

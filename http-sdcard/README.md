@@ -7,7 +7,7 @@ The following repository has either files for the Bosch XDK 110 and for the data
 **This package is a variation of the HTTP one that allows to use WLAN SSID, Password, Host and other needed values from a config file on a micro sd card, which makes possible to use the XDK in diferent networks without need to recompile (you just change values in the config file and you are ready to go)**
 
 - xdk2streams-c (C Code to build and flash to your XDK)
-- xdk2mam-rust (Rust code to start a listener server)
+- xdk2streams-rust (Rust code to start a listener server)
 
 # Instructions for the XDK110
 
@@ -122,7 +122,7 @@ To send data to the server you can use Postman, or like in this case cURL, make 
 curl --location --request POST '127.0.0.1:8080/sensor_data'   
 --header 'Content-Type: application/json'   
 --data-raw '{
-    "xdk2mam": [
+    "xdk2streams": [
         {
             "sensor": "Gyroscope",
             "data": [
