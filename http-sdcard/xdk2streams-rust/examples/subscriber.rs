@@ -19,6 +19,10 @@ impl Subscriber {
         }
     }
 
+    ///
+    /// Derives Msg Ids for channel and reads messages associated with them,
+    /// returns an empty vector if no now messages where found
+    ///
     async fn read_all_public(&mut self) -> Result<Vec<String>> {
         let mut tag = self.channel_subscriber.get_next_message();
 
@@ -59,15 +63,15 @@ async fn main() {
     sub.channel_subscriber.connect().unwrap();
     println!("Connection to channel established successfully! \n Reading messages...");
 
+    // read old messages in channel
     let public_list = sub.read_all_public().await.unwrap();
-
     for data in &public_list {
         let data: SensorData = serde_json::de::from_str(data).unwrap();
-        println!("{:?}", data);
+        println!("{:?} \n  \n", data);
     }
 
+    // listen for new messages sent to channel
     let mut public_list_len: usize = public_list.len();
-
     loop {
         let public_list = sub.read_all_public().await.unwrap();
 
@@ -75,13 +79,13 @@ async fn main() {
             Some(last) => {
                 if &public_list.len() != &public_list_len.clone() {
                     let data: SensorData = serde_json::de::from_str(&last).unwrap();
-                    println!("{:?}", data);
+                    println!("{:?} \n  \n", data);
                     public_list_len = public_list.len().clone();
                 }
             }
             None => (),
         }
-
+        // dont spam thee node with requests!
         thread::sleep(time::Duration::from_secs(2));
     }
 }

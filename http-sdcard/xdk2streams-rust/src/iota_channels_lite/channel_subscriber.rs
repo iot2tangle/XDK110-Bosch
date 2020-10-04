@@ -23,7 +23,7 @@ use anyhow::Result;
 /// Channel subscriber
 ///
 pub struct Channel {
-    pub subscriber: Subscriber,
+    subscriber: Subscriber,
     is_connected: bool,
     send_opt: SendTrytesOptions,
     announcement_link: Address,

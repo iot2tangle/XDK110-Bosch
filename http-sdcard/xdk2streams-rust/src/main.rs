@@ -10,6 +10,7 @@ use iota_streams::app::transport::tangle::client::SendTrytesOptions;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    //read configuration file
     let config: Config = serde_json::from_reader(File::open("config.json").unwrap()).unwrap();
     let device_name = config.device_name;
     let port = config.port;

@@ -1,4 +1,4 @@
-use crate::is_valid;
+use crate::authenticate;
 use crate::security::keystore::{calculate_hash, KeyManager};
 use crate::types::sensor_data::SensorData;
 use std::sync::{Arc, Mutex};
@@ -12,10 +12,22 @@ type Result<T> = std::result::Result<T, GenericError>;
 
 use hyper::{header, Body, Request, Response, StatusCode};
 
+///
+/// Handles the status request returning status code 200 if the server is online
+///
+pub async fn status_response() -> Result<Response<Body>> {
+    Ok(Response::builder().status(200).body(Body::from("OK"))?)
+}
+
+///
+/// Handles the reuqest from the sensor by parsing the provieded data into the SensorData Format.
+/// It authenticates the device through the "device" attribute, and if successfull published the data to the Tangle
+/// through the streams channel
+///
 pub async fn sensor_data_response(
     req: Request<Body>,
     channel: Arc<Mutex<Channel>>,
-    store: Arc<Mutex<KeyManager>>,
+    keystore: Arc<Mutex<KeyManager>>,
 ) -> Result<Response<Body>> {
     let data = hyper::body::to_bytes(req.into_body()).await?;
 
@@ -24,13 +36,13 @@ pub async fn sensor_data_response(
     let json_data: serde_json::Result<SensorData> = serde_json::from_slice(&data);
     match json_data {
         Ok(mut data_ser) => {
-            let hash = store
+            let hash = keystore
                 .lock()
                 .expect("lock keystore")
                 .keystore
                 .api_key_author
                 .clone();
-            if is_valid(&data_ser.device, hash.clone()) {
+            if authenticate(&data_ser.device, hash.clone()) {
                 data_ser.device.to_string().push_str("_id");
                 data_ser.device = calculate_hash(data_ser.device);
                 println!(
@@ -41,7 +53,6 @@ pub async fn sensor_data_response(
                         .as_secs()
                 );
                 let mut channel = channel.lock().unwrap();
-                //let message: String = serde_json::to_string(&data_ser).unwrap();
                 match channel.write_signed(PayloadBuilder::new().public(&data_ser).unwrap().build())
                 {
                     Ok(_) => {
@@ -51,6 +62,9 @@ pub async fn sensor_data_response(
                             .body(Body::from("Data Sent sucessfully To Tangle"))?;
                     }
                     Err(_e) => {
+                        println!(
+                            "POST /sensor_data Error: Malformed json, use xdk2streams json format"
+                        );
                         response = Response::builder()
                             .status(500)
                             .header(header::CONTENT_TYPE, "application/json")
