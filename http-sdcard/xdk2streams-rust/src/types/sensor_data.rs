@@ -6,5 +6,5 @@ use serde_derive::Serialize;
 pub struct SensorData {
     pub xdk2streams: Vec<SensorType>,
     pub device: String,
-    pub timestamp: Option<String>,
+    pub timestamp: serde_json::Value,
 }

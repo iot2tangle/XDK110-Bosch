@@ -45,8 +45,10 @@ pub async fn sensor_data_response(
             if authenticate(&sensor_data.device, hash.clone()) {
                 sensor_data.device.to_string().push_str("_id");
                 sensor_data.device = calculate_hash(sensor_data.device);
-                if sensor_data.timestamp.is_none() {
-                    sensor_data.timestamp = Some(timestamp_in_sec().to_string());
+                if (sensor_data.timestamp.clone() == String::from("0"))
+                    || (sensor_data.timestamp.clone() == 0)
+                {
+                    sensor_data.timestamp = serde_json::Value::from(timestamp_in_sec().to_string());
                 }
                 println!(
                     "POST /sensor_data -- {:?} -- authorized request by device",
