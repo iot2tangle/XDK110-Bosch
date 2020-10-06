@@ -67,7 +67,7 @@ pub async fn sensor_data_response(
                         response = Response::builder()
                             .status(500)
                             .header(header::CONTENT_TYPE, "application/json")
-                            .body(Body::from("Error while sendig data to Tangle"))?;
+                            .body(Body::from("Error while sending data to Tangle"))?;
                     }
                 };
             } else {
