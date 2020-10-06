@@ -58,23 +58,25 @@ pub async fn sensor_data_response(
                         response = Response::builder()
                             .status(StatusCode::OK)
                             .header(header::CONTENT_TYPE, "application/json")
-                            .body(Body::from("Data Sent sucessfully To Tangle"))?;
+                            .body(Body::from("Data Sucessfully Sent To Tangle"))?;
                     }
                     Err(_e) => {
                         println!(
-                            "POST /sensor_data Error: Malformed json, use xdk2streams json format"
+                            "POST /sensor_data Error: Malformed json, use iot2tangle json format"
                         );
                         response = Response::builder()
                             .status(500)
                             .header(header::CONTENT_TYPE, "application/json")
-                            .body(Body::from("Error while sending data"))?;
+                            .body(Body::from("Error while sendig data to Tangle"))?;
                     }
                 };
             } else {
                 response = Response::builder()
                     .status(StatusCode::UNAUTHORIZED)
                     .header(header::CONTENT_TYPE, "application/json")
-                    .body(Body::from("Unauthorized"))?;
+                    .body(Body::from(
+                        "Unauthorized - Device Name sent by device doesn't match the configuration",
+                    ))?;
                 println!(
                     "POST /sensor_data -- {:?} -- unauthorized request blocked",
                     timestamp_in_sec()
@@ -83,9 +85,9 @@ pub async fn sensor_data_response(
         }
         Err(_e) => {
             response = Response::builder()
-                .status(500)
+                .status(StatusCode::BAD_REQUEST)
                 .header(header::CONTENT_TYPE, "application/json")
-                .body(Body::from("Error while parsing input data"))?;
+                .body(Body::from("Malformed json - use iot2tangle json format"))?;
         }
     }
     Ok(response)
