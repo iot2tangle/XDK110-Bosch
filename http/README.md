@@ -90,7 +90,7 @@ There you can also change ports and the IOTA Full Node used.
 **Set the *device_name* to the value specified in the XDK110 configuration file as DEVICE_NAME**  
 Change *port, node, mwm, local_pow* if needed. 
 
-## Runnig the Examples:  
+## Start the Streams Server
 
 ### Sending messages to the Tangle
 
@@ -98,24 +98,23 @@ Run the Streams Gateway:
 
 `cargo run --release`  
 
-This starts the server which will forward messages from the XDK to the Tangle  
-  
-The Output will be something like this:  
-`>> Starting.... `  
-`>> Channel root: "ab3de895ec41c88bd917e8a47d54f76d52794d61ff4c4eb3569c31f619ee623d0000000000000000"`  
-`>> To Start the Subscriber run: `  
-  
-`>> cargo run --release --example subscriber "ab3de895ec41c88bd917e8a47d54f76d52794d61ff4c4eb3569c31f619ee623d0000000000000000" `  
-  
-`>> Listening on http://0.0.0.0:8080`  
+This will compile and start the Streams Gateway. Note that the compilation process may take from 3 to 30 minutes (Pi3 took us around 30 mins, Pi4 8 mins and VPS or desktop machines will generally compile under the 5 mins) depending on the device you are using as host.
+
+You will only go through the compilation once and any restart done later will take a few seconds to have the Gateway working.
+
+![Streams Gateway receiving SenseHat data](https://iot2tangle.io/assets/screenshots/PiSenseHatSend.png)
+*The Gateway starts by giving us the channel id that will allow subscribers to access the channel data.*
 
 ### Reading messages from the Tangle
 
-In a separate window start a subscriber using the Channle Root printed by the Gateway (see example above):  
+In a separate console start a subscriber using the Channel Id printed by the Gateway (see example above):  
+
 `cargo run --release --example subscriber <your_channel_root> `  
 
+![Streams Gateway receiving SenseHat data](https://iot2tangle.io/assets/screenshots/PiSenseHatGet.png)
 
-### Testing 
+
+### Testing the Gateway without sensors
 
 To send data to the server you can use Postman, or like in this case cURL, make sure the port is the same as in the config.json file:  
 `  
