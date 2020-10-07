@@ -48,14 +48,10 @@ Turn on the XDK and you are good to go!
 If everything went fine the XDK110 should now be sending its sensors data to the given destination server. 
 
 
-# Instructions for the Streams Gateway
+# Setting up the Streams Gateway
 
 
 ## Preparation
-
-Clone this repo and navigate to the http-sdcard/xdk2streams-streams where the Rust code is
-
-`git clone https://github.com/iot2tangle/xdk2streams.git`
 
 Install Rust if you don't have it already, find the instructions here https://www.rust-lang.org/tools/install
 
@@ -68,15 +64,17 @@ Make sure you also have the build dependencies installed, if not run:
 `sudo apt install libssl-dev`  
 `sudo apt update`  
 
-## Installing XDK2Streams
+## Installing the IOTA Stream Gateway
 
-Download XDK2Streams and navigate to the xdk2streams-rust folder:  
+**Note: you can run the Gateway on a Raspberry Pi, a local Node in your Network or a VPS**
 
-`git clone https://github.com/iot2tangle/xdk2streams`  
-`cd http-sdcard/xdk2streams-rust`  
+Get the IOTA Streams WiFi Gateway. 
+
+`git clone https://github.com/iot2tangle/Streams-wifi-gateway`
+
+Navigate to the **Streams-wifi-gateway** directory and edit the **config.json** file to define your device name (it must match what you set on the Sense Hat config).
+There you can also change ports and the IOTA Full Node used.  
   
-Configure the Streams Gateway on the ***config.json*** file   
-
 ```
 {
     "device_name": "XDK_HTTP", 
