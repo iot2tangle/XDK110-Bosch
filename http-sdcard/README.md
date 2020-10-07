@@ -1,4 +1,4 @@
-# XDK2Streams HTTP Protocol WITH SD CARD
+# XDK110 WiFi with SD CARD
 
 HTTP is a common protocol to transfer data and files over the network. The XDK supports HTTP natively and offers two modules to make HTTP requests. This guide will provide an introduction to both of them and will demonstrate how to use them to make GET and POST request.
 
@@ -18,7 +18,7 @@ In order to be able to run the code on this repo you will to [download XDK Workb
 Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder ***xdk2mam-c***. Accept to import project. 
 
 ### Clear, Build and Flash
-Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder **xdk2mam-c**. Accept to import project. Once project is imported, right click on **xdk2mam** folder in your Workbench Project Explorer and select **Clean project**. When the clean is done, repat and select **Build Project**. This process can take some minutes depending on your hardware and you should see any problems at the Workbench Console.
+Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder **XDK110-Bosch/http-sdcard**. Accept to import project. Once project is imported, right click on **iot2tangle** folder in your Workbench Project Explorer and select **Clean project**. When the clean is done, repeat and select **Build Project**. This process can take some minutes depending on your hardware and you should see any problems at the Workbench Console.
 
 Finally, once the project has been built, connect your XDK 110 via USB and click the ***Flash*** button to install the software on the board. If everything went fine, you should be able to see the sensor data on your console.
 
@@ -48,14 +48,12 @@ Turn on the XDK and you are good to go!
 If everything went fine the XDK110 should now be sending its sensors data to the given destination server. 
 
 
-# Instructions for the Streams Gateway
+# Setting up the Streams Gateway
+
+**Note:** you can run the Gateway on a Raspberry Pi, a local Node in your Network or a VPS
 
 
 ## Preparation
-
-Clone this repo and navigate to the http-sdcard/xdk2streams-streams where the Rust code is
-
-`git clone https://github.com/iot2tangle/xdk2streams.git`
 
 Install Rust if you don't have it already, find the instructions here https://www.rust-lang.org/tools/install
 
@@ -68,15 +66,15 @@ Make sure you also have the build dependencies installed, if not run:
 `sudo apt install libssl-dev`  
 `sudo apt update`  
 
-## Installing XDK2Streams
+## Installing the IOTA Stream Gateway
 
-Download XDK2Streams and navigate to the xdk2streams-rust folder:  
+Get the IOTA Streams WiFi Gateway. 
 
-`git clone https://github.com/iot2tangle/xdk2streams`  
-`cd http-sdcard/xdk2streams-rust`  
+`git clone https://github.com/iot2tangle/Streams-wifi-gateway`
+
+Navigate to the **Streams-wifi-gateway** directory and edit the **config.json** file to define your device name (it must match what you set on the Sense Hat config).
+There you can also change ports and the IOTA Full Node used.  
   
-Configure the Streams Gateway on the ***config.json*** file   
-
 ```
 {
     "device_name": "XDK_HTTP", 
