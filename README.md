@@ -18,6 +18,6 @@ This is an issue **we are reviewing actively with Bosch XDK team**. Until we syn
 
 **This repository has packages for the XDK110 to stream its sensors data through:**
 
-- **[HTTP](https://github.com/xdk2mam/xdk2mam/tree/Workbench-3.6/http-sdcard)** (WiFi on XDK will just post a request with the data to a given server)
+- **[HTTP](https://github.com/iot2tangle/XDK110-Bosch/tree/dev/http)** (WiFi on XDK will just post a request with the data to a given server)
 - **[HTTP-SD Card](https://github.com/iot2tangle/XDK110-Bosch/tree/master/http-sdcard)** (same as HTTP but with a config file placed on the microSD card to allow portability)
 
