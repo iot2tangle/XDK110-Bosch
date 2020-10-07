@@ -9,7 +9,7 @@ In order to be able to run the code on this repo you will to [download XDK Workb
 
 ## Flashing your XDK: wifi and sensors configuration
 
-Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder ***XDK110-Bosch***. Accept to import project. Navigate to the source folder and edit the following lines at ***xdk2mam.h***
+Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the ***XDK110-Bosch/http*** folder. Accept to import project. Navigate to the source folder and edit the following lines at ***xdk2mam.h***
 
 
 ```
