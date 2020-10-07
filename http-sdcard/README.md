@@ -50,6 +50,8 @@ If everything went fine the XDK110 should now be sending its sensors data to the
 
 # Setting up the Streams Gateway
 
+**Note:** you can run the Gateway on a Raspberry Pi, a local Node in your Network or a VPS
+
 
 ## Preparation
 
@@ -65,8 +67,6 @@ Make sure you also have the build dependencies installed, if not run:
 `sudo apt update`  
 
 ## Installing the IOTA Stream Gateway
-
-**Note: you can run the Gateway on a Raspberry Pi, a local Node in your Network or a VPS**
 
 Get the IOTA Streams WiFi Gateway. 
 
