@@ -1,19 +1,15 @@
-# XDK2MAM HTTP Protocol
+# XDK110 with WiFI
+
 HTTP is a common protocol to transfer data and files over the network. The XDK supports HTTP natively and offers two modules to make HTTP requests. This guide will provide an introduction to both of them and will demonstrate how to use them to make GET and POST request.
-
-The following repository has either files for the Bosch XDK 110 and for the data receiver in Node.js where the attach to Tangle via MAM happens. 
-
-- xdk2mam-c (C Code to build and flash to your XDK)
-- xdk2mam-nodejs (Node code to start a listener server)
-- xdk2mam2-nodejs (Node code to start a listener server and publish to MAM2)
 
 # Instructions
 
 ## Requirements
-In order to be able to run the code on this repo you will to [download XDK Workbench](https://xdk.bosch-connectivity.com/software-downloads), have a XDK 110 and insall Node on the computer you are going to use as listener server.
+In order to be able to run the code on this repo you will to [download XDK Workbench](https://xdk.bosch-connectivity.com/software-downloads), and have a XDK 110.
 
 ## Flashing your XDK: wifi and sensors configuration
-Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder ***xdk2mam-c***. Accept to import project. Navigate to the source folder and edit the following lines at ***xdk2mam.h***
+
+Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder ***XDK110-Bosch***. Accept to import project. Navigate to the source folder and edit the following lines at ***xdk2mam.h***
 
 
 ```
@@ -49,7 +45,7 @@ bool typesSensors[6] = {
 ```
 
 ### Clear, Build and Flash
-Once changes are to this files are saved, right click on ***xdk2mam*** folder in your Workbench Project Explorer and select ***Clean project***. Once this is done, repat and select ***Build Project***. This process can take some minutes depending on your hardware and you should see any problems at the Workbench Console.
+Once changes are to this files are saved, right click on ***XDK110-Bosch*** folder in your Workbench Project Explorer and select ***Clean project***. Once this is done, repat and select ***Build Project***. This process can take some minutes depending on your hardware and you should see any problems at the Workbench Console.
 
 Finally, once the project has been built, connect your XDK110 via USB and click the ***Flash*** button to install the software on the board. If everything went fine the XDK110 should now be sending its sensors data to the given destination server. 
 
