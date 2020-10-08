@@ -8,7 +8,7 @@ On the other side, [IOTA Streams](https://blog.iota.org/iota-streams-alpha-7e91e
 
 The following repository has the needed **C code** for the Bosch XDK110 to send its sensors data to the Streams Gateway
 
-## This branch code has been tested in Workbench 3.6.0
+## This branch code has been tested in Workbench 3.6.1
 
 While our goal is to always be up to the latest release of the [XDK Workbench](https://xdk.bosch-connectivity.com/software-downloads) (an Eclipse based IDE that comes with XDK to build software and flash it to the hardware), changes made by the Bosch team from release to release tend to leave our code with some compilation errors. 
 
