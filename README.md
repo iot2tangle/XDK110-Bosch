@@ -10,7 +10,7 @@ The following repository has the needed **C code** for the Bosch XDK110 to send 
 
 ## This branch code has been tested in Workbench 3.6.1
 
-While our goal is to always be up to the latest release of the [XDK Workbench](https://xdk.bosch-connectivity.com/software-downloads) (an Eclipse based IDE that comes with XDK to build software and flash it to the hardware), changes made by the Bosch team from release to release tend to leave our code with some compilation errors. 
+While our goal is to always be up to the latest release of the [XDK Workbench](https://developer.bosch.com/web/xdk/downloads) (an Eclipse based IDE that comes with XDK to build software and flash it to the hardware), changes made by the Bosch team from release to release tend to leave our code with some compilation errors. 
 
 This is an issue **we are reviewing actively with Bosch XDK team**. Until we sync we recommend to use our so called **CSVC** (current stable version to compile). This will allow you to build your project without errors so you can start working with your XDK inmmediatly after.
 

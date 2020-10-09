@@ -5,7 +5,7 @@ HTTP is a common protocol to transfer data and files over the network. The XDK s
 # Instructions
 
 ## Requirements
-In order to be able to run the code on this repo you will to [download XDK Workbench](https://xdk.bosch-connectivity.com/software-downloads), and have a XDK 110.
+In order to be able to run the code on this repo you will to [download XDK Workbench](https://developer.bosch.com/web/xdk/downloads), and have a XDK 110.
 
 ## Flashing your XDK: wifi and sensors configuration
 
@@ -13,7 +13,7 @@ Open XDK Workbench and go to File -> Import. Choose General > Projects from Fold
 
 
 ```
-#define DEVICE_NAME      "enter-your-device-id"
+#define DEVICE_NAME      "XDK-HTTP"
 ```
 
 ```
@@ -79,7 +79,7 @@ There you can also change ports and the IOTA Full Node used.
   
 ```
 {
-    "device_name": "XDK_HTTP", 
+    "device_name": "XDK-HTTP", 
     "port": 8080, 
     "node": "https://nodes.iota.cafe:443", 
     "mwm": 14,    
@@ -149,7 +149,7 @@ curl --location --request POST '127.0.0.1:8080/sensor_data'
     "timestamp": "1558511111"  
 }'  
 `   
-IMPORTANT: The device will be authenticated through the "device" field in the request (in this case XDK_HTTP), this has to match what was set as device_name in the config.json on the Gateway (see Configuration section above)!  
+IMPORTANT: The device will be authenticated through the "device" field in the request (in this case XDK-HTTP), this has to match what was set as device_name in the config.json on the Gateway (see Configuration section above)!  
   
 After a few seconds you should now see the data beeing recieved by the Subscriber!
 
