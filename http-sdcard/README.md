@@ -12,7 +12,7 @@ The following repository has either files for the Bosch XDK 110 and for the data
 # Instructions for the XDK110
 
 ## Requirements
-In order to be able to run the code on this repo you will to [download XDK Workbench](https://xdk.bosch-connectivity.com/software-downloads), have a XDK 110 and insall Node on the computer you are going to use as listener server.
+In order to be able to run the code on this repo you will to [download XDK Workbench](https://developer.bosch.com/web/xdk/downloads), have a XDK 110 and insall Node on the computer you are going to use as listener server.
 
 ## Flashing your XDK: wifi and sensors configuration
 Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder ***xdk2mam-c***. Accept to import project. 
