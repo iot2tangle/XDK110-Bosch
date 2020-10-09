@@ -27,7 +27,7 @@ Finally, once the project has been built, connect your XDK 110 via USB and click
 Open the **config.cfg** file on your computer and change the values to match your WLAN data, host, port and the sensors you want to use.
 
 ```
-DEVICE_NAME=enter-your-device-id
+DEVICE_NAME=XDK-HTTP
 WLAN_SSDI=enter-your-wifi-ssid
 WLAN_PSK=enter-your-wifi-password
 DEST_SERVER_HOST=192.168.0.4
@@ -77,7 +77,7 @@ There you can also change ports and the IOTA Full Node used.
   
 ```
 {
-    "device_name": "XDK_HTTP", 
+    "device_name": "XDK-HTTP", 
     "port": 8080, 
     "node": "https://nodes.iota.cafe:443", 
     "mwm": 14,    
@@ -147,6 +147,6 @@ curl --location --request POST '127.0.0.1:8080/sensor_data'
     "timestamp": "1558511111"  
 }'  
 `   
-IMPORTANT: The device will be authenticated through the "device" field in the request (in this case XDK_HTTP), this has to match what was set as device_name in the config.json on the Gateway (see Configuration section above)!  
+IMPORTANT: The device will be authenticated through the "device" field in the request (in this case XDK-HTTP), this has to match what was set as device_name in the config.json on the Gateway (see Configuration section above)!  
   
 After a few seconds you should now see the data beeing recieved by the Subscriber!
