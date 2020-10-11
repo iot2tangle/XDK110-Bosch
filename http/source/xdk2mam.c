@@ -47,7 +47,7 @@ static SemaphoreHandle_t semPost = NULL;
 
 // Global array of all sensors => true : enable -- false : disable
 bool typesSensors[7] = {
-						true, //ENVIROMENTAL
+						true, //ENVIRONMENTAL
 						true, //ACCELEROMETER
 						true, //GYROSCOPE
 						true, //INERTIAL
@@ -338,7 +338,7 @@ static char* receiveBufferFromSensors(void){
 
 			switch(i)
 		    {
-				case ENVIROMENTAL:
+				case ENVIRONMENTAL:
 					aux = processEnvSensorData(null,0);
 					break;
 				case ACCELEROMETER:
@@ -722,7 +722,7 @@ void appInitSystem(void* cmdProcessorHandle, uint32_t param2)
 		if(typesSensors[i]){
 			switch(i)
 		    {
-				case ENVIROMENTAL:
+				case ENVIRONMENTAL:
 					environmentalSensorInit();
 					break;
 				case ACCELEROMETER:
