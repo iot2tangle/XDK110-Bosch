@@ -6,8 +6,7 @@ The following repository has either files for the Bosch XDK 110 and for the data
 
 **This package is a variation of the HTTP one that allows to use WLAN SSID, Password, Host and other needed values from a config file on a micro sd card, which makes possible to use the XDK in diferent networks without need to recompile (you just change values in the config file and you are ready to go)**
 
-- xdk2streams-c (C Code to build and flash to your XDK)
-- xdk2streams-rust (Rust code to start a listener server)
+- http-sdcard (C Code to build and flash to your XDK)
 
 # Instructions for the XDK110
 
@@ -15,7 +14,7 @@ The following repository has either files for the Bosch XDK 110 and for the data
 In order to be able to run the code on this repo you will to [download XDK Workbench](https://developer.bosch.com/web/xdk/downloads), have a XDK 110 and insall Node on the computer you are going to use as listener server.
 
 ## Flashing your XDK: wifi and sensors configuration
-Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder ***xdk2mam-c***. Accept to import project. 
+Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder ***http-sdcard***. Accept to import project. 
 
 ### Clear, Build and Flash
 Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder **XDK110-Bosch/http-sdcard**. Accept to import project. Once project is imported, right click on **iot2tangle** folder in your Workbench Project Explorer and select **Clean project**. When the clean is done, repeat and select **Build Project**. This process can take some minutes depending on your hardware and you should see any problems at the Workbench Console.
