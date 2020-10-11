@@ -11,17 +11,20 @@
 
 /* additional interface header files */
 
-#include "BCDS_WlanConnect.h"
+#include "XDK_WLAN.h"
+#include "XDK_ServalPAL.h"
+#include "XDK_HTTPRestClient.h"
+#include "XDK_SNTP.h"
+#include "BCDS_BSP_Board.h"
 #include "BCDS_NetworkConfig.h"
 #include "BCDS_CmdProcessor.h"
+#include "BCDS_Assert.h"
+#include "XDK_Utils.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
-#include <Serval_HttpClient.h>
-#include <Serval_XUdp.h>
-#include <Serval_Network.h>
 #include <Serval_Clock.h>
 #include <Serval_Log.h>
-#include "BCDS_ServalPal.h"
-#include "BCDS_ServalPalWiFi.h"
 #include "FreeRTOS.h"
 #include "timers.h"
 #include "Serval_Http.h"
@@ -31,7 +34,6 @@
 #include "InertialSensor.h"
 #include "LightSensor.h"
 #include "Magnetometer.h"
-#include "Acoustic.h"
 #include "semphr.h"
 
 
@@ -39,10 +41,9 @@ static xTaskHandle httpGetTaskHandle;
 static xTaskHandle httpPostTaskHandle;
 static xTimerHandle triggerHttpRequestTimerHandle;
 static uint32_t httpGetPageOffset = 0;
-static CmdProcessor_T CommandProcessorHandle;
 CmdProcessor_T *AppCmdProcessorHandle;
 static uint32_t SysTime = UINT32_C(0);
-
+HTTPRestClient_Config_T HTTPRestClientConfigInfo;
 static SemaphoreHandle_t semPost = NULL;
 
 // Global array of all sensors => true : enable -- false : disable
@@ -56,78 +57,6 @@ bool typesSensors[7] = {
 						true  //ACOUSTIC
 					};
 
-static Retcode_T ServalPalSetup(void)
-{
-    Retcode_T returnValue = RETCODE_OK;
-    returnValue = CmdProcessor_Initialize(&CommandProcessorHandle, "Serval PAL", TASK_PRIORITY_SERVALPAL_CMD_PROC, TASK_STACK_SIZE_SERVALPAL_CMD_PROC, TASK_QUEUE_LEN_SERVALPAL_CMD_PROC);
-    /* serval pal common init */
-    if (RETCODE_OK == returnValue)
-    {
-        returnValue = ServalPal_Initialize(&CommandProcessorHandle);
-    }
-    if (RETCODE_OK == returnValue)
-    {
-        returnValue = ServalPalWiFi_Init();
-    }
-    if (RETCODE_OK == returnValue)
-    {
-        ServalPalWiFi_StateChangeInfo_T stateChangeInfo = { SERVALPALWIFI_OPEN, INT16_C(0) };
-        returnValue = ServalPalWiFi_NotifyWiFiEvent(SERVALPALWIFI_STATE_CHANGE, &stateChangeInfo);
-    }
-    return returnValue;
-}
-
-
-static Retcode_T connectToWLAN(void)
-{
-    Retcode_T retcode;
-
-    retcode = WlanConnect_Init();
-    if (RETCODE_OK != retcode)
-    {
-        return retcode;
-    }
-
-
-    retcode = NetworkConfig_SetIpDhcp(NULL);
-    if (RETCODE_OK != retcode)
-    {
-        return retcode;
-    }
-
-    printf("Connecting to %s \r\n ", WLAN_SSID);
-
-    retcode = WlanConnect_WPA((WlanConnect_SSID_T) WLAN_SSID, (WlanConnect_PassPhrase_T) WLAN_PSK, NULL);
-    if (RETCODE_OK != retcode)
-    {
-        return retcode;
-    }
-
-    NetworkConfig_IpSettings_T currentIpSettings;
-    retcode = NetworkConfig_GetIpSettings(&currentIpSettings);
-    if (RETCODE_OK != retcode)
-    {
-        return retcode;
-    }
-    else
-    {
-        uint32_t ipAddress = Basics_htonl(currentIpSettings.ipV4);
-
-        char humanReadbleIpAddress[SERVAL_IP_ADDR_LEN] = { 0 };
-        int conversionStatus = Ip_convertAddrToString(&ipAddress, humanReadbleIpAddress);
-        if (conversionStatus < 0)
-        {
-            printf("Couldn't convert the IP address to string format \r\n");
-        }
-        else
-        {
-            printf("Connected to WPA network successfully \r\n");
-            printf(" Ip address of the device %s \r\n", humanReadbleIpAddress);
-        }
-    }
-
-    return retcode;
-}
 
 static retcode_t httpRequestSentCallback(Callable_T* caller, retcode_t callerStatus)
 {
@@ -685,35 +614,83 @@ void InitSntpTime() {
 void appInitSystem(void* cmdProcessorHandle, uint32_t param2)
 {
 
-    BCDS_UNUSED(param2);
-    Retcode_T returnValue = RETCODE_OK;
-    AppCmdProcessorHandle = (CmdProcessor_T *) cmdProcessorHandle;
+	 WLAN_Setup_T WLANSetupInfo =
+	    	        {
+	    	                .IsEnterprise = false,
+	    	                .IsHostPgmEnabled = false,
+	    	                .SSID = WLAN_SSID,
+	    	                .Username = WLAN_PSK,
+	    	                .Password = WLAN_PSK,
+	    	                .IsStatic = 0,
+	    	                .IpAddr = XDK_NETWORK_IPV4(0, 0, 0, 0),
+	    	                .GwAddr = XDK_NETWORK_IPV4(0, 0, 0, 0),
+	    	                .DnsAddr = XDK_NETWORK_IPV4(0, 0, 0, 0),
+	    	                .Mask = XDK_NETWORK_IPV4(0, 0, 0, 0),
+	    	        };
 
-    semPost = xSemaphoreCreateBinary();
+	HTTPRestClient_Setup_T HTTPRestClientSetupInfo =
+	{
+			.IsSecure = HTTP_SECURE_ENABLE,
+	};
 
-    retcode_t rc = RC_OK;
-    rc = connectToWLAN();
-    if (RC_OK != rc)
-    {
-        printf("appInitSystem: network init/connection failed. error=%d\r\n", rc);
-        return;
-    }
+	HTTPRestClientConfigInfo.IsSecure = HTTP_SECURE_ENABLE;
+	HTTPRestClientConfigInfo.DestinationServerUrl = DEST_SERVER_HOST;
+	HTTPRestClientConfigInfo.DestinationServerPort = atoi(DEST_SERVER_PORT);
+	HTTPRestClientConfigInfo.RequestMaxDownloadSize = REQUEST_MAX_DOWNLOAD_SIZE;
 
-    printf("ServalPal Setup\r\n");
-    returnValue = ServalPalSetup();
-    if (RETCODE_OK != returnValue)
-    {
-        Retcode_RaiseError(returnValue);
-        printf("ServalPal Setup failed with %d \r\n", (int) returnValue);
-        return;
-    }
+	BCDS_UNUSED(param2);
+	Retcode_T returnValue = RETCODE_OK;
+	AppCmdProcessorHandle = (CmdProcessor_T *) cmdProcessorHandle;
 
-    rc = HttpClient_initialize();
-    if (RC_OK != rc)
-    {
-        printf("Failed to initialize http client \r\n ");
-        return;
-    }
+	retcode_t rc = RC_OK;
+	rc = WLAN_Setup(&WLANSetupInfo);
+	if (RC_OK != rc)
+	{
+		printf("appInitSystem: network init/connection failed. error=%d\r\n", rc);
+		return;
+	}
+	printf("ServalPal Setup\r\n");
+	returnValue = ServalPAL_Setup(AppCmdProcessorHandle);
+
+	if (RETCODE_OK == returnValue)
+	{
+		returnValue = HTTPRestClient_Setup(&HTTPRestClientSetupInfo);
+	}
+
+	if (RETCODE_OK != returnValue)
+	{
+		Retcode_RaiseError(returnValue);
+		printf("ServalPal Setup failed with %d \r\n", (int) returnValue);
+		return;
+	}
+
+	Retcode_T retcode = WLAN_Enable();
+	if (RETCODE_OK == retcode)
+	{
+		retcode = ServalPAL_Enable();
+	}
+	if (RETCODE_OK == retcode)
+	{
+	   retcode = HTTPRestClient_Enable();
+	}
+	if (RETCODE_OK != retcode){
+		Retcode_RaiseError(retcode);
+		printf("WLAN_Enable failed with %d \r\n", (int) retcode);
+		return;
+	}
+	printf("Connecting to %s \r\n ", WLAN_SSID);
+	rc = HTTPRestClient_Setup(&HTTPRestClientSetupInfo);
+	if (RETCODE_OK != rc){
+		Retcode_RaiseError(rc);
+		printf("HTTPRestClient_Setup failed with %d \r\n", (int) rc);
+		return;
+	}
+	rc = HTTPRestClient_Enable();
+	if (RETCODE_OK != rc){
+		Retcode_RaiseError(rc);
+		printf("HTTPRestClient_Enable failed with %d \r\n", (int) rc);
+		return;
+	}
 
     InitSntpTime();
 
