@@ -7,7 +7,7 @@ BCDS_BASE_DIR ?= ../../..
 
 # Macro to define Start-up method. change this macro to "CUSTOM_STARTUP" to have custom start-up.
 export BCDS_SYSTEM_STARTUP_METHOD = DEFAULT_STARTUP
-export BCDS_APP_NAME = xdk2mam
+export BCDS_APP_NAME = iot2tangle
 export BCDS_APP_DIR = $(CURDIR)
 export BCDS_APP_SOURCE_DIR = $(BCDS_APP_DIR)/source
 export BCDS_APP_SOURCE_DIR_SENSORS = $(BCDS_APP_DIR)/source/sensors
@@ -40,7 +40,7 @@ export BCDS_XDK_INCLUDES = \
 #List all the application source file under variable BCDS_XDK_APP_SOURCE_FILES in a similar pattern as below
 export BCDS_XDK_APP_SOURCE_FILES = \
 	$(BCDS_APP_SOURCE_DIR)/Main.c \
-	$(BCDS_APP_SOURCE_DIR)/xdk2mam.c \
+	$(BCDS_APP_SOURCE_DIR)/iot2tangle.c \
 	$(BCDS_APP_SOURCE_DIR_SENSORS)/EnvironmentalSensor.c \
 	$(BCDS_APP_SOURCE_DIR_SENSORS)/Accelerometer.c \
 	$(BCDS_APP_SOURCE_DIR_SENSORS)/Gyroscope.c \
