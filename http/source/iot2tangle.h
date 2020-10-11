@@ -1,6 +1,6 @@
 
-#ifndef XDK110_HTTPXDK2MAM_H
-#define XDK110_HTTPXDK2MAM_H
+#ifndef XDK110_HTTPIOT2TANGLE_H
+#define XDK110_HTTPIOT2TANGLE_H
 
 #include "BCDS_Basics.h"
 #include "BCDS_CmdProcessor.h"
@@ -86,13 +86,13 @@ typedef enum{
  * POST_REQUEST_CUSTOM_HEADER_0 is a custom header which is sent along with the
  * POST request. It's meant to demonstrate how to use custom header.
  */
-#define POST_REQUEST_CUSTOM_HEADER_0    "X-AuthToken: XDK2MAM\r\n"
+#define POST_REQUEST_CUSTOM_HEADER_0    "X-AuthToken: IOT2TANGLE\r\n"
 
 /**
  * POST_REQUEST_CUSTOM_HEADER_1 is a custom header which is sent along with the
  * POST request. It's meant to demonstrate how to use custom header.
  */
-#define POST_REQUEST_CUSTOM_HEADER_1    "X-Foobar: XDK2MAM\r\n"
+#define POST_REQUEST_CUSTOM_HEADER_1    "X-Foobar: IOT2TANGLE\r\n"
 
 
 /**
@@ -133,4 +133,4 @@ void appInitSystem(void * CmdProcessorHandle, uint32_t param2);
 CmdProcessor_T * GetAppCmdProcessorHandle(void);
 
 
-#endif /* XDK110_HTTPXDK2MAM_H */
+#endif /* XDK110_HTTPIOT2TANGLE_H */
