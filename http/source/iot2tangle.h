@@ -80,7 +80,7 @@ typedef enum{
  *
  * Change this value if you use your own web server.
  */
-#define DEST_POST_PATH                  "/sensors"
+#define DEST_POST_PATH                  "/sensor_data"
 
 /**
  * POST_REQUEST_CUSTOM_HEADER_0 is a custom header which is sent along with the
