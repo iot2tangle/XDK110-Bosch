@@ -1,6 +1,6 @@
 
-#ifndef XDK110_HTTPXDK2MAM_H
-#define XDK110_HTTPXDK2MAM_H
+#ifndef XDK110_HTTPIOT2TANGLE_H
+#define XDK110_HTTPIOT2TANGLE_H
 
 #include "BCDS_Basics.h"
 #include "BCDS_CmdProcessor.h"
@@ -14,7 +14,7 @@
 #define FIRST_LOCATION UINT8_C(0)
 
 typedef enum{
-	ENVIROMENTAL = 0,
+	ENVIRONMENTAL = 0,
 	ACCELEROMETER = 1,
 	GYROSCOPE = 2,
 	INERTIAL = 3,
@@ -135,4 +135,4 @@ void appInitSystem(void * CmdProcessorHandle, uint32_t param2);
 CmdProcessor_T * GetAppCmdProcessorHandle(void);
 
 
-#endif /* XDK110_HTTPXDK2MAM_H */
+#endif /* XDK110_HTTPIOT2TANGLE_H */

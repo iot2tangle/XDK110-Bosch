@@ -9,7 +9,7 @@ In order to be able to run the code on this repo you will to [download XDK Workb
 
 ## Flashing your XDK: wifi and sensors configuration
 
-Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the ***XDK110-Bosch/http*** folder. Accept to import project. Navigate to the source folder and edit the following lines at ***xdk2mam.h***
+Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the ***XDK110-Bosch/http*** folder. Accept to import project. Navigate to the source folder and edit the following lines at ***iot2tangle.h***
 
 
 ```
@@ -30,7 +30,7 @@ Open XDK Workbench and go to File -> Import. Choose General > Projects from Fold
 ```
 #define INTER_REQUEST_INTERVAL   UINT32_C(30000)
 ```
-By default this code will stream data for every sensor built in in the XDK 110. If you want to only use some sensors, edit the file ***xdk2mam.c*** and switch to false on the ones you don't want to use. For instance, following edit will not send data for  Light and Magnometer sensors
+By default this code will stream data for every sensor built in in the XDK 110. If you want to only use some sensors, edit the file ***iot2tangle.c*** and switch to false on the ones you don't want to use. For instance, following edit will not send data for  Light and Magnometer sensors
 
 ```
 // Global array of all sensors => true : enable -- false : disable
@@ -121,7 +121,7 @@ To send data to the server you can use Postman, or like in this case cURL, make 
 curl --location --request POST '127.0.0.1:8080/sensor_data'   
 --header 'Content-Type: application/json'   
 --data-raw '{
-    "xdk2streams": [
+    "iot2tangle": [
         {
             "sensor": "Gyroscope",
             "data": [

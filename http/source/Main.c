@@ -9,7 +9,7 @@
 /* additional interface header files */
 #include "XdkSystemStartup.h"
 #include "BCDS_Assert.h"
-#include "xdk2mam.h"
+#include "iot2tangle.h"
 #include "BCDS_CmdProcessor.h"
 #include "FreeRTOS.h"
 #include "task.h"
