@@ -1,10 +1,10 @@
 #include "XDKAppInfo.h"
 
 #undef BCDS_MODULE_ID  /* Module ID define before including Basics package*/
-#define BCDS_MODULE_ID XDK_APP_MODULE_ID_HTTP_XDK2MAM_CLIENT
+#define BCDS_MODULE_ID XDK_APP_MODULE_ID_HTTP_IOT2TANGLE_CLIENT
 
 /* own header files */
-#include "xdk2mam.h"
+#include "iot2tangle.h"
 
 /* system header files */
 #include <stdio.h>
@@ -328,7 +328,7 @@ static char* receiveBufferFromSensors(void){
     char *aux;
 
 
-	strcat(buffer,"{\"xdk2mam\":[");
+	strcat(buffer,"{\"iot2tangle\":[");
 
 	for(i=0;i<MAX_SENSORS_ARRAY;i++){
 
@@ -750,14 +750,14 @@ void appInitSystem(void* cmdProcessorHandle, uint32_t param2)
 
 	BaseType_t taskCreated;
 
-	taskCreated = xTaskCreate(httpPostTask, "XDK2MAM Post", TASK_STACK_SIZE_HTTP_REQ, NULL, TASK_PRIO_HTTP_REQ, &httpPostTaskHandle);
+	taskCreated = xTaskCreate(httpPostTask, "IOT2TANGLE Post", TASK_STACK_SIZE_HTTP_REQ, NULL, TASK_PRIO_HTTP_REQ, &httpPostTaskHandle);
 	if (taskCreated != pdTRUE)
 	{
 		printf("Failed to create the POST request task\r\n");
 		return;
 	}
 
-	triggerHttpRequestTimerHandle = xTimerCreate("triggerXDK2MAMRequestTimer", INTER_REQUEST_INTERVAL / portTICK_RATE_MS, pdFALSE, NULL, triggerHttpRequestTimerCallback);
+	triggerHttpRequestTimerHandle = xTimerCreate("triggerIOT2TANGLERequestTimer", INTER_REQUEST_INTERVAL / portTICK_RATE_MS, pdFALSE, NULL, triggerHttpRequestTimerCallback);
 	if (triggerHttpRequestTimerHandle == NULL)
 	{
 		printf("Failed to create the triggerRequestTimer\r\n");
