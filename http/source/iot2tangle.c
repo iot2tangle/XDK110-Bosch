@@ -614,19 +614,21 @@ void InitSntpTime() {
 void appInitSystem(void* cmdProcessorHandle, uint32_t param2)
 {
 
-	 WLAN_Setup_T WLANSetupInfo =
-	    	        {
-	    	                .IsEnterprise = false,
-	    	                .IsHostPgmEnabled = false,
-	    	                .SSID = WLAN_SSID,
-	    	                .Username = WLAN_PSK,
-	    	                .Password = WLAN_PSK,
-	    	                .IsStatic = 0,
-	    	                .IpAddr = XDK_NETWORK_IPV4(0, 0, 0, 0),
-	    	                .GwAddr = XDK_NETWORK_IPV4(0, 0, 0, 0),
-	    	                .DnsAddr = XDK_NETWORK_IPV4(0, 0, 0, 0),
-	    	                .Mask = XDK_NETWORK_IPV4(0, 0, 0, 0),
-	    	        };
+	semPost = xSemaphoreCreateBinary();
+
+	WLAN_Setup_T WLANSetupInfo =
+				{
+						.IsEnterprise = false,
+						.IsHostPgmEnabled = false,
+						.SSID = WLAN_SSID,
+						.Username = WLAN_PSK,
+						.Password = WLAN_PSK,
+						.IsStatic = 0,
+						.IpAddr = XDK_NETWORK_IPV4(0, 0, 0, 0),
+						.GwAddr = XDK_NETWORK_IPV4(0, 0, 0, 0),
+						.DnsAddr = XDK_NETWORK_IPV4(0, 0, 0, 0),
+						.Mask = XDK_NETWORK_IPV4(0, 0, 0, 0),
+				};
 
 	HTTPRestClient_Setup_T HTTPRestClientSetupInfo =
 	{
