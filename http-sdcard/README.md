@@ -44,6 +44,9 @@ Save the values, extract the micro SD card and carefully insert it into the XDK 
 Turn on the XDK and you are good to go! 
 If everything went fine the XDK110 should now be sending its sensors data to the given destination server. 
 
+### Dealing with the Invalid application error
+Some XDK110 using the 1.1.0 bootloader version produce an invalid application output when the flash process finishes. If you get this error, try clicking on the **Boot** button (it should reboot and give the error again) and then click again on **Flash**. If you get the error again, repeat the process. We don't know why this error is produced and have already informed the XDK110 team at Bosch about it.
+
 
 # Setting up the Streams Gateway
 
