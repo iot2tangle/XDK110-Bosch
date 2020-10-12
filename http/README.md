@@ -49,6 +49,9 @@ Once changes are to this files are saved, right click on ***XDK110-Bosch*** fold
 
 Finally, once the project has been built, connect your XDK110 via USB and click the ***Flash*** button to install the software on the board. If everything went fine the XDK110 should now be sending its sensors data to the given destination server. 
 
+### Dealing with the Invalid application error
+Some XDK110 using the 1.1.0 bootloader version produce an invalid application output when the flash process finishes. If you get this case, try clicking on the **Boot** button (it should reboot and give the error again) and then click again on **Flash**. If you get the error again, repeat the process. We don't know why this error is produced and have already informed the XDK110 team at Bosch about it.
+
 
 # Setting up the Streams Gateway
 
