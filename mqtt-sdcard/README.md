@@ -12,10 +12,9 @@ The following repository has C code to have the Bosch XDK 110 sending its data t
 In order to be able to run the code on this repo you will to [download XDK Workbench](https://developer.bosch.com/web/xdk/downloads), and have a Bosch XDK 110.
 
 ## Flashing your XDK: wifi and sensors configuration
-Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder ***iot2tangle-c***. Accept to import project. 
 
 ### Clear, Build and Flash
-Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder **XDK110-Bosch/http-sdcard**. Accept to import project. Once project is imported, right click on **iot2tangle** folder in your Workbench Project Explorer and select **Clean project**. When the clean is done, repeat and select **Build Project**. This process can take some minutes depending on your hardware and you should see any problems at the Workbench Console.
+Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder **XDK110-Bosch/mqtt-sdcard**. Accept to import project. Once project is imported, right click on **iot2tangle-mqtt** folder in your Workbench Project Explorer and select **Clean project**. When the clean is done, repeat and select **Build Project**. This process can take some minutes depending on your hardware and you should see any problems at the Workbench Console.
 
 Finally, once the project has been built, connect your XDK 110 via USB and click the ***Flash*** button to install the software on the board. If everything went fine, you should be able to see the sensor data on your console.
 
