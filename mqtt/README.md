@@ -70,31 +70,6 @@ Open XDK Workbench and go to File -> Import. Choose General > Projects from Fold
 
 Finally, once the project has been built, connect your XDK 110 via USB and click the ***Flash*** button to install the software on the board. If everything went fine, you should be able to see the sensor data on your console.
 
-### Editing config data
-
-Open the **config.cfg** file on your computer and change the values to match your WLAN data, MQTT Host, Port, auth data, and the sensors you want to use.
-
-```
-DEVICE_NAME=enter-your-device-id
-WLAN_SSDI=enter-your-wifi-ssid
-WLAN_PSK=enter-your-wifi-password
-MQTT_BROKER_HOST=enter-ip-mqtt-host
-MQTT_BROKER_PORT=enter-port-mqtt
-PUBLISHTIMER_PERIOD_IN_MS=30000
-MQTT_USERNAME=enter-username
-MQTT_PASSWORD=enter-password
-TOPIC=enter-topic-name
-ENVIROMENTAL=YES
-ACCELEROMETER=YES
-GYROSCOPE=YES
-INERTIAL=YES
-LIGHT=YES
-MAGNETOMETER=YES
-ACOUSTIC=YES
-```
-
-Save the values, extract the micro SD card and carefully insert it into the XDK SD slot (contacts up). 
-Turn on the XDK and you are good to go! 
 If everything went fine the XDK110 should now be sending its sensors data to the MQTT Broker defined in the config. 
 
 ### Dealing with the Invalid application error
