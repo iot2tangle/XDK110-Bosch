@@ -129,6 +129,5 @@ You can now head to the I2T Streams Explorer and search for the published datase
 ![Streams Gateway receiving SenseHat data](https://iot2tangle.io/assets/screenshots/XDKMQTTEXPLORER.png)
 
 
-IMPORTANT: The device will be authenticated through the "device" field in the request (in this case XDK-HTTP), this has to match what was set as device_name in the config.json on the Gateway (see Configuration section above)!  
+**IMPORTANT:** Devices will be authenticated by the Gateway through the "whitelisted_device_ids" parameter of the config.json. Be sure to use the same Device Id on both config files (the one used for the XDK110 SD Card and the one used by the Gateway).
   
-After a few seconds you should now see the data beeing recieved by the Subscriber!
