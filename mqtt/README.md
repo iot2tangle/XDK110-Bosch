@@ -11,7 +11,7 @@ In order to be able to run the code on this repo you will to [download XDK Workb
 
 ## Flashing your XDK: Wifi, Broker and sensors configuration
 
-Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder **XDK110-Bosch/mqtt-sdcard**. Accept to import project.
+Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder **XDK110-Bosch/mqtt**. Accept to import project.
 Navigate to the source folder and edit the following lines at **iot2tangle-mqtt.h**
 
 
@@ -66,11 +66,11 @@ bool typesSensors[6] = {
 
 
 ### Clear, Build and Flash
-Open XDK Workbench and go to File -> Import. Choose General > Projects from Folder or Archive and select the folder **XDK110-Bosch/mqtt**. Accept to import project. Once project is imported, right click on **iot2tangle-mqtt** folder in your Workbench Project Explorer and select **Clean project**. When the clean is done, repeat and select **Build Project**. This process can take some minutes depending on your hardware and you should see any problems at the Workbench Console.
+We are now ready to compile and flash. Right click on **iot2tangle-mqtt** folder in your Workbench Project Explorer and select **Clean project**. When the clean is done, repeat and select **Build Project**. This process can take some minutes depending on your hardware and you should see any problems at the Workbench Console.
 
 Finally, once the project has been built, connect your XDK 110 via USB and click the ***Flash*** button to install the software on the board. If everything went fine, you should be able to see the sensor data on your console.
 
-If everything went fine the XDK110 should now be sending its sensors data to the MQTT Broker defined in the config. 
+If everything went fine the XDK110 should now be sending its sensors data to the MQTT Broker defined on iot2tangle-mqtt.h. 
 
 ### Dealing with the Invalid application error
 Some XDK110 using the 1.1.0 bootloader version produce an invalid application output when the flash process finishes. If you get this error, try clicking on the **Boot** button (it should reboot and give the error again) and then click again on **Flash**. If you get the error again, repeat the process. We don't know why this error is produced and have already informed the XDK110 team at Bosch about it.
