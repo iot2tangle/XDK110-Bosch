@@ -1,4 +1,4 @@
-# XDK110 WiFi with SD CARD
+# XDK110 MQTT with SD CARD
 
 MQTT is an open OASIS and ISO standard lightweight, publish-subscribe network protocol that transports messages between devices. The protocol usually runs over TCP/IP; however, any network protocol that provides ordered, lossless, bi-directional connections can support MQTT
 
