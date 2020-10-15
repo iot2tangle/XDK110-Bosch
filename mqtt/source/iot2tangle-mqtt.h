@@ -31,20 +31,20 @@ typedef enum{
 
 
 
-#define WLAN_SSID 			"Funkito"
+#define WLAN_SSID 			"YourWifiNetwork"
 
-#define WLAN_PSK			"2007201181"
+#define WLAN_PSK			"YourWifiPassword"
 
-#define MQTT_BROKER_HOST	"mqtt.iot2tangle.link"
+#define MQTT_BROKER_HOST	"MQTT_BROKER_HOST"
 
 
 #define MQTT_BROKER_PORT	UINT16_C(8883) //<-- MQTT_PORT_BROKER
 
-#define MQTT_USERNAME	"mqtti2t"
+#define MQTT_USERNAME	"YourMqttUsername"
 
-#define MQTT_PASSWORD	"integrateeverything"
+#define MQTT_PASSWORD	"YourMqttPassowrd"
 
-#define DEVICE_NAME			"XDK110MQTT"
+#define DEVICE_NAME			"XDK-DEVICE-NAME"
 
 #define USE_PUBLISH_TIMER 	true
 
@@ -52,7 +52,7 @@ typedef enum{
 
 #define COMMON_BUFFER_SIZE 	PUBLISH_BUFFER_SIZE
 
-#define TOPIC				"carpincho"
+#define TOPIC				"YourTopicName"
 
 #define PUBLISHTIMER_PERIOD_IN_MS 30000
 
