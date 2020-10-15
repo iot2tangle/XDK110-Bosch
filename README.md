@@ -18,4 +18,6 @@ This is an issue **we are reviewing actively with Bosch XDK team**. Until we syn
 
 - **[HTTP](https://github.com/iot2tangle/XDK110-Bosch/tree/dev/http)** (WiFi on XDK will just post a request with the data to a given server)
 - **[HTTP-SD Card](https://github.com/iot2tangle/XDK110-Bosch/tree/master/http-sdcard)** (same as HTTP but with a config file placed on the microSD card to allow portability)
+- **[MQTT](https://github.com/iot2tangle/XDK110-Bosch/tree/master/mqtt)** (XDK110 sends data to a MQTT Broker)
+- **[MQTT-SD Card](https://github.com/iot2tangle/XDK110-Bosch/tree/master/mqtt-sdcard)** (XDK110 sends data to a MQTT Broker with config file to allow portability)
 
